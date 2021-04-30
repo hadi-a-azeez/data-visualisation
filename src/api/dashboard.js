@@ -60,7 +60,7 @@ export const getData = async () => {
   let { data, error } = await supabase.rpc("ordercount");
 
   if (error) console.error(error);
-  else console.log(data);
+  else return data;
 };
 
 /* SELECT order_date,COUNT(*) as order_date
