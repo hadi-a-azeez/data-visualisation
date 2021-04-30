@@ -55,3 +55,15 @@ export const getTodayReveneu = async () => {
 
   return sum;
 };
+
+export const getData = async () => {
+  let { data, error } = await supabase.rpc("ordercount");
+
+  if (error) console.error(error);
+  else console.log(data);
+};
+
+/* SELECT order_date,COUNT(*) as order_date
+FROM orders
+GROUP BY order_date
+ORDER BY order_date DESC; */
