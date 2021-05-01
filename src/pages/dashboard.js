@@ -12,7 +12,7 @@ import {
   getRevenueTotal,
 } from "../api/dashboard";
 import OrdersCountChart from "../components/charts/ordersCount";
-import RevenueTotal from "../components/charts/revenueTotal";
+import RevenueTotalChart from "../components/charts/revenueTotal";
 
 const Dashboard = () => {
   const [orderCount, setOrderCount] = useState();
@@ -105,7 +105,9 @@ const Dashboard = () => {
             )}
           </div>
           <div className={style.chart_wraper}>
-            {revenueData.length > 0 && <RevenueTotal datas={revenueData} />}
+            {revenueData.length > 0 && (
+              <RevenueTotalChart datas={revenueData} />
+            )}
           </div>
         </div>
       </div>

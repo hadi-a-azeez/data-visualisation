@@ -1,6 +1,6 @@
 import { Bar } from "react-chartjs-2";
 
-const RevenueTotal = ({ datas }) => {
+const RevenueTotalChart = ({ datas }) => {
   const revenueLabels = [];
   const revenueData = [];
 
@@ -13,7 +13,7 @@ const RevenueTotal = ({ datas }) => {
     labels: revenueLabels,
     datasets: [
       {
-        label: "Orders",
+        label: "Revenue",
         data: revenueData,
         backgroundColor: "#fd7670",
         borderColor: "#fd7670",
@@ -40,4 +40,4 @@ const RevenueTotal = ({ datas }) => {
   );
 };
 
-export default RevenueTotal;
+export default RevenueTotalChart;
