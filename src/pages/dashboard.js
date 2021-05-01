@@ -9,8 +9,10 @@ import {
   getTotalReveneu,
   getAllOrderCount,
   getData,
+  getRevenueTotal,
 } from "../api/dashboard";
 import OrdersCountChart from "../components/charts/ordersCount";
+import RevenueTotal from "../components/charts/revenueTotal";
 
 const Dashboard = () => {
   const [orderCount, setOrderCount] = useState();
@@ -18,6 +20,7 @@ const Dashboard = () => {
   const [totalReveneu, setTotalReveneu] = useState();
   const [todayReveneu, setTodayReveneu] = useState();
   const [orderCountData, setOrderCountData] = useState([]);
+  const [revenueData, setRevenueData] = useState([]);
 
   useEffect(() => {
     const getAllData = async () => {
@@ -25,14 +28,16 @@ const Dashboard = () => {
       const todayOrder = await getOrderCountToday();
       const ReveneuTotal = await getTotalReveneu();
       const ReveneuToday = await getTodayReveneu();
-      const data = await getData();
+      const totalOrderCount = await getData();
+      const totalRevenue = await getRevenueTotal();
 
       setOrderCount(orderCount);
       setOrderCountToday(todayOrder);
       setTotalReveneu(ReveneuTotal);
       setTodayReveneu(ReveneuToday);
-      setOrderCountData(data);
-      console.log(data);
+      setOrderCountData(totalOrderCount);
+      setRevenueData(totalRevenue);
+      console.log(totalRevenue);
     };
 
     getAllData();
@@ -93,10 +98,15 @@ const Dashboard = () => {
             <h1 className={style.report_percentage}>+33%</h1>
           </div>
         </div>
-        <div style={{ width: "50%", height: "auto", marginTop: "2rem" }}>
-          {orderCountData.length > 0 && (
-            <OrdersCountChart datas={orderCountData} />
-          )}
+        <div className={style.wrapper}>
+          <div className={style.chart_wraper}>
+            {orderCountData.length > 0 && (
+              <OrdersCountChart datas={orderCountData} />
+            )}
+          </div>
+          <div className={style.chart_wraper}>
+            {revenueData.length > 0 && <RevenueTotal datas={revenueData} />}
+          </div>
         </div>
       </div>
     </div>

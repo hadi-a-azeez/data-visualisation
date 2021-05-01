@@ -62,8 +62,9 @@ export const getData = async () => {
   if (error) console.error(error);
   else return data;
 };
+export const getRevenueTotal = async () => {
+  let { data, error } = await supabase.rpc("revenuetotal");
 
-/* SELECT order_date,COUNT(*) as order_date
-FROM orders
-GROUP BY order_date
-ORDER BY order_date DESC; */
+  if (error) console.error(error);
+  else return data;
+};
