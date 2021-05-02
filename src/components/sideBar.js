@@ -7,7 +7,7 @@ import {
   TimeIcon,
   CheckIcon,
 } from "@chakra-ui/icons";
-import { Box, Flex, Stack } from "@chakra-ui/layout";
+import { Flex, Stack } from "@chakra-ui/layout";
 
 const SideBar = () => {
   return (
