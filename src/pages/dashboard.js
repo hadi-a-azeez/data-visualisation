@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [todayReveneu, setTodayReveneu] = useState();
   const [orderCountData, setOrderCountData] = useState([]);
   const [revenueData, setRevenueData] = useState([]);
+  const [customerAddressData, setCustomerAddressData] = useState([]);
 
   useEffect(() => {
     const getAllData = async () => {
@@ -39,14 +40,27 @@ const Dashboard = () => {
       setTodayReveneu(ReveneuToday);
       setOrderCountData(totalOrderCount);
       setRevenueData(totalRevenue);
-      console.log(customerAddress);
+      setCustomerAddressData(customerAddress);
     };
 
     getAllData();
   }, []);
 
+  const CalculateLocation = () => {
+    const Malappuram = [];
+    customerAddressData.map((location) => {
+      //console.log(location.customer_address);
+      if (location.customer_address.toLowerCase().includes("malappuram")) {
+        Malappuram.push(location);
+      }
+    });
+    console.log(Malappuram.length);
+    return <></>;
+  };
+
   return (
     <div className={style.container}>
+      {customerAddressData.length > 0 && <CalculateLocation />}
       <div style={{ width: "20%" }}>
         <SideBar />
       </div>
