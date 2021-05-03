@@ -10,6 +10,7 @@ import {
   getAllOrderCount,
   getData,
   getRevenueTotal,
+  getCustomerAdrress,
 } from "../api/dashboard";
 import OrdersCountChart from "../components/charts/ordersCount";
 import RevenueTotalChart from "../components/charts/revenueTotal";
@@ -30,6 +31,7 @@ const Dashboard = () => {
       const ReveneuToday = await getTodayReveneu();
       const totalOrderCount = await getData();
       const totalRevenue = await getRevenueTotal();
+      const customerAddress = await getCustomerAdrress();
 
       setOrderCount(orderCount);
       setOrderCountToday(todayOrder);
@@ -37,7 +39,7 @@ const Dashboard = () => {
       setTodayReveneu(ReveneuToday);
       setOrderCountData(totalOrderCount);
       setRevenueData(totalRevenue);
-      console.log(totalRevenue);
+      console.log(customerAddress);
     };
 
     getAllData();

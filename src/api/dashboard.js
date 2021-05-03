@@ -62,9 +62,17 @@ export const getData = async () => {
   if (error) console.error(error);
   else return data;
 };
+
 export const getRevenueTotal = async () => {
   let { data, error } = await supabase.rpc("revenuetotal");
 
   if (error) console.error(error);
   else return data;
+};
+
+export const getCustomerAdrress = async () => {
+  let { data, error } = await supabase
+    .from("orders")
+    .select("customer_address");
+  return data;
 };
