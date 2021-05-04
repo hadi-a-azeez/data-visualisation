@@ -22,7 +22,6 @@ const Dashboard = () => {
   const [todayReveneu, setTodayReveneu] = useState();
   const [orderCountData, setOrderCountData] = useState([]);
   const [revenueData, setRevenueData] = useState([]);
-  const [customerAddressData, setCustomerAddressData] = useState([]);
 
   useEffect(() => {
     const getAllData = async () => {
@@ -32,7 +31,6 @@ const Dashboard = () => {
       const ReveneuToday = await getTodayReveneu();
       const totalOrderCount = await getData();
       const totalRevenue = await getRevenueTotal();
-      const customerAddress = await getCustomerAdrress();
 
       setOrderCount(orderCount);
       setOrderCountToday(todayOrder);
@@ -40,27 +38,13 @@ const Dashboard = () => {
       setTodayReveneu(ReveneuToday);
       setOrderCountData(totalOrderCount);
       setRevenueData(totalRevenue);
-      setCustomerAddressData(customerAddress);
     };
 
     getAllData();
   }, []);
 
-  const CalculateLocation = () => {
-    const Malappuram = [];
-    customerAddressData.map((location) => {
-      //console.log(location.customer_address);
-      if (location.customer_address.toLowerCase().includes("malappuram")) {
-        Malappuram.push(location);
-      }
-    });
-    console.log(Malappuram.length);
-    return <></>;
-  };
-
   return (
     <div className={style.container}>
-      {customerAddressData.length > 0 && <CalculateLocation />}
       <div style={{ width: "20%" }}>
         <SideBar />
       </div>
