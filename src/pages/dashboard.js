@@ -10,7 +10,6 @@ import {
   getAllOrderCount,
   getData,
   getRevenueTotal,
-  getCustomerAdrress,
 } from "../api/dashboard";
 import OrdersCountChart from "../components/charts/ordersCount";
 import RevenueTotalChart from "../components/charts/revenueTotal";
