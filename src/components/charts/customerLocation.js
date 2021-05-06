@@ -1,5 +1,5 @@
 //import axios from "axios";
-import { Doughnut } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
 const CustomerLocation = ({ datas, orderCount }) => {
   const Malappuram = [];
@@ -35,7 +35,7 @@ const CustomerLocation = ({ datas, orderCount }) => {
     labels: labels,
     datasets: [
       {
-        label: "Orders",
+        label: "Location",
         data: percentage,
         backgroundColor: [
           "rgba(255, 99, 132, 0.9)",
@@ -54,7 +54,7 @@ const CustomerLocation = ({ datas, orderCount }) => {
 
   return (
     <>
-      <Doughnut data={data} options={options} width={300} height={150} />
+      <Bar data={data} options={options} width={300} height={150} />
     </>
   );
 };

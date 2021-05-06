@@ -21,8 +21,15 @@
   align-items: center;
   font-family: "elemen";
 }
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  margin-top: 1rem;
+}
 .chart_wraper {
-  width: 45%;
+  width: 40%;
   min-height: 15rem;
   height: auto;
   margin-top: 2rem;

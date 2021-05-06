@@ -7,3 +7,10 @@ export const getCustomerAdrress = async () => {
     .select("customer_address");
   return data;
 };
+
+export const getResellerCount = async () => {
+  let { data, error } = await supabase.rpc("resellercount");
+
+  if (error) return error;
+  else return data;
+};
