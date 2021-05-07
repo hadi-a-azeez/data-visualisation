@@ -1,8 +1,6 @@
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/input";
 import React, { useState, useEffect } from "react";
 import SideBar from "../components/sideBar";
 import style from "./css/dashboard.module.scss";
-import { SearchIcon } from "@chakra-ui/icons";
 import {
   getOrderCountToday,
   getTodayReveneu,
@@ -13,6 +11,7 @@ import {
 } from "../api/dashboard";
 import OrdersCountChart from "../components/charts/ordersCount";
 import RevenueTotalChart from "../components/charts/revenueTotal";
+import Search from "../components/search";
 
 const Dashboard = () => {
   const [orderCount, setOrderCount] = useState();
@@ -55,18 +54,7 @@ const Dashboard = () => {
           minHeight: "100vh",
         }}
       >
-        <InputGroup size="lg" p="2" mt="8" w="35%">
-          <InputLeftElement width="4.5rem">
-            <SearchIcon mt="5" color="gray.400" />
-          </InputLeftElement>
-          <Input
-            pr="4.5rem"
-            placeholder="Search"
-            borderRadius="full"
-            borderColor="gray.100"
-            bg="gray.100"
-          />
-        </InputGroup>
+        <Search />
         <div className={style.wrapper}>
           <div className={style.report_wrapper}>
             <h1 className={style.report_heading}>Total orders</h1>

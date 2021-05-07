@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "elemen";
+  src: url("../../assets/fonts/circular-bold.woff");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "elemen";
+  src: url("../../assets/fonts/circular-medium.woff");
+  font-weight: medium;
+}
+@font-face {
+  font-family: "elemen";
+  src: url("../../assets/fonts/circular-book.woff");
+  font-weight: normal;
+}
+
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  font-family: "elemen";
+}
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+.chart_wraper {
+  width: 40%;
+  min-height: 15rem;
+  height: auto;
+  margin-top: 2rem;
+  background-color: rgb(250, 248, 248);
+  border-radius: 2rem;
+  padding: 1rem;
+  margin-right: 1rem;
+}

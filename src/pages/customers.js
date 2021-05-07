@@ -5,6 +5,7 @@ import { getCustomerAdrress, getResellerCount } from "../api/customer";
 import { getAllOrderCount } from "../api/dashboard";
 import CustomerLocation from "../components/charts/customerLocation";
 import CustomerType from "../components/charts/customerType";
+import Search from "../components/search";
 
 const Customers = () => {
   const [customerAddressData, setCustomerAddressData] = useState([]);
@@ -37,6 +38,7 @@ const Customers = () => {
           minHeight: "100vh",
         }}
       >
+        <Search />
         <div className={style.wrapper}>
           <div className={style.chart_wraper}>
             {customerAddressData.length > 0 && allOrderCount > 0 && (
