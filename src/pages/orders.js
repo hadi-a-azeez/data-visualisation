@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
 import style from "./css/orders.module.scss";
+import { getOrderPayment } from "../api/orders";
+import OrderPayment from "../components/charts/orderPayment";
 
 import Search from "../components/search";
 
 const Orders = () => {
+  const [orderPayment, setOrderPayment] = useState([]);
   useEffect(() => {
-    const getData = async () => {};
+    const getData = async () => {
+      const orderpayment = await getOrderPayment();
+
+      setOrderPayment(orderpayment);
+      console.log(orderpayment);
+    };
     getData();
   }, []);
 
@@ -24,19 +32,11 @@ const Orders = () => {
         }}
       >
         <Search />
-        {/*   <div className={style.wrapper}>
+        <div className={style.wrapper}>
           <div className={style.chart_wraper}>
-            {customerAddressData.length > 0 && allOrderCount > 0 && (
-              <CustomerLocation
-                datas={customerAddressData}
-                orderCount={allOrderCount}
-              />
-            )}
+            {orderPayment.length > 0 && <OrderPayment datas={orderPayment} />}
           </div>
-          <div className={style.chart_wraper}>
-            {customerType.length > 0 && <CustomerType datas={customerType} />}
-          </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );
