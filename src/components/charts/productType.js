@@ -1,10 +1,10 @@
 import { Pie } from "react-chartjs-2";
 
-const ProductType = ({ datas }) => {
+const ProductType = ({ datas, orderCount }) => {
   const productTypeLabels = ["Pant", "Full set", "Top"];
   const productTypeData = [];
 
-  datas.map((item) => productTypeData.push(item.counts));
+  datas.map((item) => productTypeData.push((item.counts / orderCount) * 100));
 
   const data = {
     labels: productTypeLabels,
