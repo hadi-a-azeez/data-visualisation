@@ -21,6 +21,18 @@ export const ExportCSV = ({ csvData, fileName }) => {
     FileSaver.saveAs(data, fileName + fileExtension);
   };
   return (
-    <button onClick={(e) => exportToCSV(csvData, fileName)}>Export</button>
+    <button
+      style={{
+        backgroundColor: "#fd7670",
+        color: "white",
+        borderRadius: "4px",
+        padding: "1rem 0.5rem",
+        width: "20%",
+        marginTop: "5px",
+      }}
+      onClick={(e) => exportToCSV(csvData, fileName)}
+    >
+      Export csv
+    </button>
   );
 };
