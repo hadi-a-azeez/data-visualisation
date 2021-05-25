@@ -14,3 +14,12 @@ export const getResellerCount = async () => {
   if (error) return error;
   else return data;
 };
+
+export const allData = async () => {
+  let { data, error } = await supabase
+    .from("orders")
+    .select(`*,order_products(*)`);
+  console.log(data);
+  console.log(error);
+  return data;
+};

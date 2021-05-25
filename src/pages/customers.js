@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
 import SideBar from "../components/sideBar";
 import style from "./css/customers.module.scss";
-import { getCustomerAdrress, getResellerCount } from "../api/customer";
+import { getCustomerAdrress, getResellerCount, allData } from "../api/customer";
 import { getAllOrderCount } from "../api/dashboard";
 import CustomerLocation from "../components/charts/customerLocation";
 import CustomerType from "../components/charts/customerType";
 import Search from "../components/search";
+import { ExportCSV } from "../components/sheet";
 
 const Customers = () => {
   const [customerAddressData, setCustomerAddressData] = useState([]);
   const [allOrderCount, setAllOrderCount] = useState([]);
   const [customerType, setCustomerType] = useState([]);
+  const [fullData, setFullData] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       const customerAddress = await getCustomerAdrress();
       const orderCount = await getAllOrderCount();
       const resellerCount = await getResellerCount();
+      const allDataresponse = await allData();
 
       setCustomerAddressData(customerAddress);
       setAllOrderCount(orderCount);
       setCustomerType(resellerCount);
+      setFullData(allDataresponse);
+      console.log(allDataresponse);
     };
     getData();
   }, []);
+
+  const fileName = "alldata";
 
   return (
     <div className={style.container}>
@@ -52,6 +59,7 @@ const Customers = () => {
             {customerType.length > 0 && <CustomerType datas={customerType} />}
           </div>
         </div>
+        <ExportCSV csvData={fullData} fileName={fileName} />
       </div>
     </div>
   );
