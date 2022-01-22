@@ -4,7 +4,7 @@ const RevenueTotalChart = ({ datas }) => {
   const revenueLabels = [];
   const revenueData = [];
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 20; i++) {
     revenueLabels.push(datas[i].dates);
     revenueData.push(datas[i].total);
   }

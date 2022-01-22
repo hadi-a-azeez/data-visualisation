@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import SideBar from "../components/sideBar";
 import style from "./css/dashboard.module.scss";
 import {
@@ -12,6 +12,8 @@ import {
 import OrdersCountChart from "../components/charts/ordersCount";
 import RevenueTotalChart from "../components/charts/revenueTotal";
 import Search from "../components/search";
+import { DatePicker, Space } from "antd";
+import dayjs from "dayjs";
 
 const Dashboard = () => {
   const [orderCount, setOrderCount] = useState();
@@ -20,12 +22,28 @@ const Dashboard = () => {
   const [todayReveneu, setTodayReveneu] = useState();
   const [orderCountData, setOrderCountData] = useState([]);
   const [revenueData, setRevenueData] = useState([]);
+  const INIT_DATE_RANGE = [
+    dayjs().subtract(7, "days").startOf("day"),
+    dayjs().endOf("day"),
+  ];
+
+  const [ChartDateRange, setChartDateRange] = useState([...INIT_DATE_RANGE]);
+
+  const days = useMemo(() => {
+    return dayjs(ChartDateRange[1]).diff(ChartDateRange[0], "day") + 1;
+  }, [ChartDateRange]);
+
+  const { RangePicker } = DatePicker;
 
   useEffect(() => {
     const getAllData = async () => {
-      const orderCount = await getAllOrderCount();
+      let payload = {
+        startDate: dayjs(ChartDateRange[0]).format("YYYY-MM-DD"),
+        endDate: dayjs(ChartDateRange[1]).format("YYYY-MM-DD"),
+      };
+      const orderCount = await getAllOrderCount(payload);
       const todayOrder = await getOrderCountToday();
-      const ReveneuTotal = await getTotalReveneu();
+      const ReveneuTotal = await getTotalReveneu(payload);
       const ReveneuToday = await getTodayReveneu();
       const totalOrderCount = await getData();
       const totalRevenue = await getRevenueTotal();
@@ -39,7 +57,16 @@ const Dashboard = () => {
     };
 
     getAllData();
-  }, []);
+  }, [ChartDateRange]);
+
+  const onChangeDate = (values) => {
+    if (values && values.length > 0) {
+      const [startDate, endDate] = values;
+      setChartDateRange([dayjs(startDate), dayjs(endDate)]);
+    } else {
+      setChartDateRange([...INIT_DATE_RANGE]);
+    }
+  };
 
   return (
     <div className={style.container}>
@@ -54,7 +81,12 @@ const Dashboard = () => {
           minHeight: "100vh",
         }}
       >
-        <Search />
+        {/* <Search /> */}
+        <RangePicker
+          style={{ width: "300px", marginTop: "3rem" }}
+          format="DD MMM YYYY"
+          onChange={(e) => onChangeDate(e)}
+        />
         <div className={style.wrapper}>
           <div className={style.report_wrapper}>
             <h1 className={style.report_heading}>Total orders</h1>
@@ -81,6 +113,24 @@ const Dashboard = () => {
             <h1 className={style.report_heading}>Revenue Today</h1>
             <h1 className={style.report_stat}>
               {todayReveneu > 0 ? `₹${todayReveneu}` : "-"}
+            </h1>
+            <h1 className={style.report_percentage}>+33%</h1>
+          </div>
+          <div className={style.report_wrapper}>
+            <h1 className={style.report_heading}>Average order</h1>
+            <h1 className={style.report_stat}>
+              {/* remove decimal part */}
+              {orderCount > 0 ? Math.trunc(orderCount / 21) : "-"}
+            </h1>
+            <h1 className={style.report_percentage}>+33%</h1>
+          </div>
+        </div>
+        <div className={style.wrapper}>
+          <div className={style.report_wrapper}>
+            <h1 className={style.report_heading}>Average revenue</h1>
+            <h1 className={style.report_stat}>
+              {/* remove decimal part */}
+              {orderCount > 0 ? Math.trunc(totalReveneu / days) : "-"}
             </h1>
             <h1 className={style.report_percentage}>+33%</h1>
           </div>

@@ -4,7 +4,7 @@ const OrdersCountChart = ({ datas }) => {
   const ordersCountLabels = [];
   const ordersCountData = [];
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 20; i++) {
     ordersCountLabels.push(datas[i].dates);
     ordersCountData.push(datas[i].counts);
   }

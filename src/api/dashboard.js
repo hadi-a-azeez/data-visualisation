@@ -1,43 +1,69 @@
 import supabase from "../supabase";
 import date from "date-and-time";
 
-export const getAllOrderCount = async () => {
-  const { data, error, count: allorder } = await supabase
+export const getAllOrderCount = async (payload) => {
+  const {
+    data,
+    error,
+    count: allorder,
+  } = await supabase
     .from("orders")
-    .select("id", { count: "exact" });
-  console.log(allorder);
+    .select("id", { count: "exact" })
+    .neq("order_status", "CANCELLED")
+    .neq("order_status", "RETURNED")
+    .neq("order_status", "REFUNDED")
+    .gte("order_date", `${payload.startDate}`)
+    .lte("order_date", `${payload.endDate}`);
 
   return allorder;
 };
 
 export const getOrderCountToday = async () => {
   const today = date.format(new Date(), "YYYY-M-DD");
-  const { data, error, count: allordertoday } = await supabase
+  const {
+    data,
+    error,
+    count: allordertoday,
+  } = await supabase
     .from("orders")
     .select("order_date", { count: "exact" })
     .eq("order_date", today);
-  console.log(allordertoday);
 
   return allordertoday;
 };
 
-export const getTotalReveneu = async () => {
-  const { data: amounts, error } = await supabase
-    .from("order_products")
-    .select("product_price");
+export const getTotalReveneu = async (payload) => {
+  // const { data: amounts, error } = await supabase
+  //   .from("order_products")
+  //   .select("product_price");
+  // console.log(amounts, error);
 
+  const { data: amounts, error } = await supabase
+    .from("orders")
+    .select(`order_products (product_price)`)
+    .neq("order_status", "CANCELLED")
+    .neq("order_status", "RETURNED")
+    .neq("order_status", "REFUNDED")
+    .gte("order_date", `${payload.startDate}`)
+    .lte("order_date", `${payload.endDate}`);
   const { data: shippingCharges, error: errorshipping } = await supabase
     .from("orders")
-    .select("shipping_charge");
+    .select("shipping_charge")
+    .neq("order_status", "CANCELLED")
+    .neq("order_status", "RETURNED")
+    .neq("order_status", "REFUNDED")
+    .gte("order_date", `${payload.startDate}`)
+    .lte("order_date", `${payload.endDate}`);
   const sumOfShippingCharge = shippingCharges.reduce(
     (acc, obj) => acc + obj.shipping_charge,
     0
   );
   const sumOforders = amounts.reduce((acc, obj) => {
-    return acc + obj.product_price;
+    return (
+      acc + obj.order_products.reduce((acc, obj) => acc + obj.product_price, 0)
+    );
   }, 0);
   const sum = sumOfShippingCharge + sumOforders;
-  console.log(sum);
   return sum;
 };
 
