@@ -9,6 +9,10 @@ const OrdersCountChart = ({ datas }) => {
     ordersCountData.push(datas[i].counts);
   }
 
+  //inverse the data
+  ordersCountData.reverse();
+  ordersCountLabels.reverse();
+
   const data = {
     labels: ordersCountLabels,
     datasets: [
