@@ -7,6 +7,7 @@ import CustomerLocation from "../components/charts/customerLocation";
 import CustomerType from "../components/charts/customerType";
 import Search from "../components/search";
 import { ExportCSV } from "../components/sheet";
+import dayjs from "dayjs";
 
 const Customers = () => {
   const [customerAddressData, setCustomerAddressData] = useState([]);
@@ -17,7 +18,10 @@ const Customers = () => {
   useEffect(() => {
     const getData = async () => {
       const customerAddress = await getCustomerAdrress();
-      const orderCount = await getAllOrderCount();
+      const orderCount = await getAllOrderCount({
+        startDate: "2020-01-01",
+        endDate: dayjs().format("YYYY-MM-DD"),
+      });
       const resellerCount = await getResellerCount();
       const allDataresponse = await allData();
 
@@ -25,7 +29,6 @@ const Customers = () => {
       setAllOrderCount(orderCount);
       setCustomerType(resellerCount);
       setFullData(allDataresponse);
-      console.log(allDataresponse);
     };
     getData();
   }, []);

@@ -5,6 +5,7 @@ import { getOrderPayment, getProductType } from "../api/orders";
 import { getAllOrderCount } from "../api/dashboard";
 import OrderPayment from "../components/charts/orderPayment";
 import ProductType from "../components/charts/productType";
+import dayjs from "dayjs";
 
 import Search from "../components/search";
 
@@ -17,7 +18,10 @@ const Orders = () => {
     const getData = async () => {
       const orderpayment = await getOrderPayment();
       const producttype = await getProductType();
-      const ordercount = await getAllOrderCount();
+      const ordercount = await getAllOrderCount({
+        startDate: "2020-01-01",
+        endDate: dayjs().format("YYYY-MM-DD"),
+      });
 
       setOrderPayment(orderpayment);
       setProductType(producttype);
@@ -45,8 +49,9 @@ const Orders = () => {
             {orderPayment.length > 0 && <OrderPayment datas={orderPayment} />}
           </div>
           <div className={style.chart_wraper}>
-            {productType.length > 0 && orderCount > 0 &&
-             <ProductType datas={productType} orderCount={orderCount} />}
+            {productType.length > 0 && orderCount > 0 && (
+              <ProductType datas={productType} orderCount={orderCount} />
+            )}
           </div>
         </div>
       </div>
